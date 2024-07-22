@@ -36,7 +36,7 @@ def ingest_cube_meta():
     vectorstore.save_local("vectorstore.pkl")
 
 llm = OpenAI(
-    temperature=0, openai_api_key=os.environ.get("sk-migrate-service-RLY19flwpNIuqVm1zAFGT3BlbkFJGZNoLKP3GWHOAbEV941b"), verbose=True
+    temperature=0, openai_api_key="sk-migrate-service-RLY19flwpNIuqVm1zAFGT3BlbkFJGZNoLKP3GWHOAbEV941b", verbose=True
 )
 
 if not Path("vectorstore.pkl").exists():
