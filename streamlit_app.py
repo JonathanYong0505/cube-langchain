@@ -23,7 +23,8 @@ load_dotenv()
 
 def ingest_cube_meta():
     security_context = {}
-    token = jwt.encode(security_context, os.environ["CUBE_API_SECRET"], algorithm="HS256")
+    # token = jwt.encode(security_context, os.environ["CUBE_API_SECRET"], algorithm="HS256")
+    token = "CUBE_API_SECRET"
 
     print(token)
     loader = CubeSemanticLoader(os.environ["CUBE_API_URL"], token)
@@ -34,13 +35,14 @@ def ingest_cube_meta():
     # Save vectorstore
     vectorstore.save_local("vectorstore.pkl")
 
+llm = OpenAI(
+    temperature=0, openai_api_key=os.environ.get("OPENAI_API_KEY"), verbose=True
+)
+
 if not Path("vectorstore.pkl").exists():
     with st.spinner('Loading context from Cube API...'):
         ingest_cube_meta()
 
-llm = OpenAI(
-    temperature=0, openai_api_key=os.environ.get("OPENAI_API_KEY"), verbose=True
-)
 
 st.title("Cube and LangChain demo 🤖🚀")
 
