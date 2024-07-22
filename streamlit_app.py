@@ -24,14 +24,19 @@ load_dotenv()
 def ingest_cube_meta():
     security_context = {}
     # token = jwt.encode(security_context, os.environ["CUBE_API_SECRET"], algorithm="HS256")
-    token = "CUBE_API_SECRET"
+    token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1Ijp7fSwiaWF0IjoxNjAzNzMzMDA2fQ.zZ6C1OqWFuF0od3eb_M6Fqzeb7a8g4JXYepIes3CLos"
 
-    print(token)
     # loader = CubeSemanticLoader(os.environ["CUBE_API_URL"], token)
-    loader = CubeSemanticLoader("https://flaky-sheep.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1/", token)
+    loader = CubeSemanticLoader("https://flaky-sheep.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1", token)
+    # loader = CubeSemanticLoader("https://example-url.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1", token)
     documents = loader.load()
 
+    print("Documents \n", documents)
+
     embeddings = OpenAIEmbeddings()
+    
+    print("Documents \n", embeddings)
+
     vectorstore = FAISS.from_documents(documents, embeddings)
     # Save vectorstore
     vectorstore.save_local("vectorstore.pkl")
