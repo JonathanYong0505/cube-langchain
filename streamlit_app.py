@@ -27,7 +27,8 @@ def ingest_cube_meta():
     token = "CUBE_API_SECRET"
 
     print(token)
-    loader = CubeSemanticLoader(os.environ["CUBE_API_URL"], token)
+    # loader = CubeSemanticLoader(os.environ["CUBE_API_URL"], token)
+    loader = CubeSemanticLoader("https://example-url.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1", token)
     documents = loader.load()
 
     embeddings = OpenAIEmbeddings()
