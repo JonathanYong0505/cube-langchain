@@ -23,10 +23,10 @@ load_dotenv()
 
 def ingest_cube_meta():
     security_context = {}
-    token = jwt.encode(security_context, os.environ["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1Ijp7fSwiaWF0IjoxNjAzNzMzMDA2fQ.zZ6C1OqWFuF0od3eb_M6Fqzeb7a8g4JXYepIes3CLos"], algorithm="HS256")
+    token = jwt.encode(security_context, os.environ["CUBE_API_SECRET"], algorithm="HS256")
 
     print(token)
-    loader = CubeSemanticLoader(os.environ["https://example-url.gcp-us-central1.cubecloudapp.dev/cubejs-api/v1"], token)
+    loader = CubeSemanticLoader(os.environ["CUBE_API_URL"], token)
     documents = loader.load()
 
     embeddings = OpenAIEmbeddings()
@@ -39,7 +39,7 @@ if not Path("vectorstore.pkl").exists():
         ingest_cube_meta()
 
 llm = OpenAI(
-    temperature=0, openai_api_key=os.environ.get("sk-migrate-service-RLY19flwpNIuqVm1zAFGT3BlbkFJGZNoLKP3GWHOAbEV941b"), verbose=True
+    temperature=0, openai_api_key=os.environ.get("OPENAI_API_KEY"), verbose=True
 )
 
 st.title("Cube and LangChain demo 🤖🚀")
@@ -63,7 +63,7 @@ if st.button("Submit", type="primary"):
     check_input(question)
     if not Path("vectorstore.pkl").exists():
         st.warning("vectorstore.pkl does not exist.")
-    vectorstore = FAISS.load_local("vectorstore1.pkl", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+    vectorstore = FAISS.load_local("vectorstore.pkl", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
 
     # log("Quering vectorstore and building the prompt...")
 
