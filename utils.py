@@ -82,7 +82,7 @@ _NO_ANSWER_TEXT = "I can't answer this question."
 def call_sql_api(sql_query: str):
     load_dotenv()
     # CONN_STR = os.environ["DATABASE_URL"]
-    CONN_STR = "postgresql://cube:ai@example-url.gcp-us-central1.cubecloudapp.dev:5432/example"
+    CONN_STR = "postgresql://cube:12345@flaky-sheep.gcp-us-central1.cubecloudapp.dev:5432/ecom"
 
     # Initializing Cube SQL API connection)
     connection = psycopg2.connect(CONN_STR)
